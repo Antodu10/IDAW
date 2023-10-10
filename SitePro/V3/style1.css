@@ -1,0 +1,52 @@
+body{
+    background-color: aquamarine;
+    margin: 0px;
+}
+
+.conteneur-flexible{
+    display: flex; 
+    justify-content: space-around;
+    flex-direction: row;
+    margin:30px;
+}
+
+.inner-flex {
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: lightgray;
+    border: 1px solid gray;
+    padding: 1em;
+    
+}   
+.inner-item-principale{
+    margin: 20px;
+    text-decoration: underline;
+}
+.inner-item{
+    margin: 20px;
+}
+
+
+.item2 {
+    padding: 20px;
+    border:5px solid blue;;
+    margin: 50px;
+    background-color:solid blue;
+  }
+img{
+    height: 300px;
+}
+
+nav a {
+    text-decoration: none;
+    font-size: 120%;
+    
+}
+
+nav a:hover {
+    color: white;
+    background-color: gray;
+}
+#currentpage{
+    color:rebeccapurple;}
