@@ -1,22 +1,74 @@
 body{
-    background-color: aquamarine;
-    margin: 0px;
+    margin:0px;
+    background: linear-gradient(to top, #070346, #000000);
+    background-size: 100% 100%;
 }
-
-.conteneur-flexible{
+header{
+    height: 5vh;
+}
+.bandeau_haut{
+    display: flex;
+    justify-content:space-between;;
+    flex-direction: row;
+    align-items: center;
+}
+.titre{
+    margin:0px;
+    font-size: 1em;
+    color:white;
+}
+.menu{
+   
+    height: 10vh;
     display: flex; 
     justify-content: space-around;
+    align-items: center;
     flex-direction: row;
-    margin:30px;
+    margin:0px;
+    background-color: rgba(123, 38, 121, 0.52);
 }
 
+.corps{
+    margin: 0px;
+    height:85vh;
+    align-items: center;
+}
+.conteneur-flexible-projet{
+    display: flex; 
+    justify-content:center;
+    align-items: center;
+    flex-direction: row;
+    color:white;
+    margin:0px;
+}
+.conteneur-flexible-cv{
+    display: flex; 
+    justify-content: space-around;
+    align-items: space-around;
+    flex-direction: row;
+    color:white;
+    margin:0px;
+}
+.inCv{
+    margin:3px
+}
+br{
+    height:0px;
+}
+.text_cv{
+    display: flex; 
+    justify-content: space-around;
+    align-items: space around;
+    flex-direction: column;
+    color:white;
+    margin:0px;
+}
 .inner-flex {
     display:flex;
     justify-content: center;
     flex-direction: column;
-    background-color: lightgray;
-    border: 1px solid gray;
     padding: 1em;
+    margin-left: 200px;
     
 }   
 .inner-item-principale{
@@ -29,18 +81,20 @@ body{
 
 
 .item2 {
-    padding: 20px;
-    border:5px solid blue;;
-    margin: 50px;
-    background-color:solid blue;
+    padding: 0px;
+    margin: 0px;
+    
   }
 img{
+    margin-top: 100px;
     height: 300px;
+    
 }
 
 nav a {
-    text-decoration: none;
+    color:white;
     font-size: 120%;
+    text-decoration: none;
     
 }
 
@@ -49,4 +103,43 @@ nav a:hover {
     background-color: gray;
 }
 #currentpage{
-    color:rebeccapurple;}
+   border:5px aqua;}
+.prg1{
+    color:white;
+    margin:5px;
+    margin-left: 40px;
+}
+.bienvenue{
+    color: white;
+    margin-left: 40px;
+    margin-top: 50px;
+}
+
+.conteneur {
+    position: relative;
+    width: 200px; 
+    height: 200px; 
+    animation: moveImage 1s linear ; 
+}
+
+@keyframes moveImage {
+    0% {
+        left: 0;
+    }
+    50% {
+        left: 200px; /* Déplace l'image vers la droite */
+    }
+    100% {
+        left: 0; /* Ramène l'image à sa position d'origine */
+    }
+}
+
+#imgA {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+

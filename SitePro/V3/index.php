@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <?php
-    require_once("fr/template_header.php");
-   
-         require_once("fr/template_menu.php");
         $currentPageId = 'accueil';
         $currentLangId= 'fr';
         if(isset($_GET['page']) && isset($_GET['lang'])) {
             $currentPageId = $_GET['page'];
             $currentLangId = $_GET['lang'];
         }
+        require_once($currentLangId."/template_header.php");
+        require_once($currentLangId."/template_menu.php");
     ?>
     
     <header class="bandeau_haut">
-        <h1 class="titre">Antonin PIAT</h1>
+        <h1 class="titre"> Antonin PIAT</h1>
+        <?php
+        require_once($currentLangId."/template-langue.php");
+        ?>
     </header>
-    
     <?php
         renderMenuToHTML($currentPageId,$currentLangId);
     ?>
-    <section class="corps">
+    <div class="corps">
         <?php
             $pageToInclude = $currentLangId."/".$currentPageId . ".php";
             if(is_readable($pageToInclude))
@@ -26,5 +27,9 @@
             else
                 require_once("error.php");
         ?>
-    </section>
+    </div>
+    </body>
+<div>
+
+
 <html>
