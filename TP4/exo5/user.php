@@ -1,26 +1,12 @@
 <?php
 
-    require_once('config.php');
-    $connectionString = "mysql:host=". _MYSQL_HOST;
-    if(defined('_MYSQL_PORT'))
-        $connectionString .= ";port=". _MYSQL_PORT;
-
-    $connectionString .= ";dbname=" . _MYSQL_DBNAME;
-    $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8' );
-    $pdo = NULL;
-    try {
-        $pdo = new PDO($connectionString,_MYSQL_USER,_MYSQL_PASSWORD,$options);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    }
-    catch (PDOException $erreur) {
-        echo 'Erreur : '.$erreur->getMessage();
-    }
+    require_once('init_pdo.php');
+    
     $request = $pdo->prepare("select * from users");
     $request->execute();
     $resultats=$request->fetchall(PDO::FETCH_OBJ);
 
     function is_in($ind,$res){
-       
         $bool=false;
         foreach ($res as $r){
             if($ind==$r->id){
@@ -51,7 +37,15 @@
             $request = $pdo->prepare("insert into users (name,email) values (:nom,:email)");
             $request->bindParam(":nom",$data_array["name"], PDO::PARAM_STR);
             $request->bindParam(":email", $data_array["email"], PDO::PARAM_STR);
-            exit($request->execute());
+            $request->execute()
+            $request = $pdo->prepare("select colonne_valeur
+                                            FROM ma_table
+                                            ORDER BY id DESC
+                                            LIMIT 1");
+            $request->execute()
+            $resultat=$request->fetch(PDO::FETCH_OBJ);
+            exit(json_encode($resultat));
+            
         case 'DELETE':
             $data_array = json_decode(file_get_contents('php://input'), true);
             if(is_in($data_array['id'],$resultats)){
