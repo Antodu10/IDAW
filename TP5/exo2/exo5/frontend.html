@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+    <link href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+    <title>tabletest</title>
+    <style>
+        body{ margin-top: 5em; }
+        .table {
+        margin-top: 100px;
+        margin-bottom: 100px;
+        }
+        #col-sm-3{margin-top: 20px ;}
+        #errorNom{
+            color:red;
+            margin-left:20px;
+        }
+
+    </style>
+</head>
+<body>
+    <table class="myTable">
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">nom</th>
+            <th scope="col">email</th>
+            <th scope="col">CRUD</th>
+        </tr>
+
+    </thead>
+    <tbody id="studentsTableBody">
+
+    </tbody>
+    </table>
+       
+    <form id="addStudentForm" action="" onsubmit="onFormSubmit();">
+        <div class="form-group row">
+            <label for="inputNom" class="col-sm-2 col-form-label">nom</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="inputNom" >
+            </div>
+            <label for="inputEmail" class="col-sm-2 col-form-label">email</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="inputEmail" >
+            </div>
+            <div class="form-group row">
+                <span class="col-sm-2"></span>
+                <div class="col-sm-2">
+                    <input type="submit" value="Submit" />
+                </div>
+            </div>
+        </div>
+    </form>
+    <div>
+        <button onclick="get_All();">GetAll</button>
+    </div>
+</body>
+    <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    
+    <script>
+    let table = new DataTable('.myTable');
+    
+    function onFormSubmit() {
+    // prevent the form to be sent to the server
+    event.preventDefault();
+    let nom = $("#inputNom").val();
+    let mail = $("#inputEmail").val();
+    let dataToSend = {
+        name: nom,
+        email:mail
+    };
+    let jsonData = JSON.stringify(dataToSend);
+    $.ajax({
+            url: "user.php",
+            method: "Post",
+            dataType : "json",
+            data:jsonData
+        })
+        .done(function(response){
+            console.log(nom);
+            console.log(response);
+            $("#studentsTableBody").append(`<tr><td>${response.id}</td><td>${nom}</td><td>${mail}</td><td><button id= onclick="onDelete(${element.id});">Delete</button></td>`)
+        }) 
+        .fail(function(error){
+            console.log(nom)
+        alert("La requête s'est terminée en échec. Infos : " + JSON.stringify(error));})
+    }
+
+    function get_All(){
+        document.getElementById("studentsTableBody").innerHTML = "";
+        $.ajax({
+            url:"users.php",
+            method:"GET",
+            dataType:"json"
+
+        })
+        .done(function(response){
+            response.forEach(function(element) {
+                $("#studentsTableBody").append(`<tr><td>${element.id}</td><td>${element.name}</td><td>${element.email}</td><td><button onclick="onDelete(${element.id});">Delete</button></td>`)    
+        })
+    })
+        .fail(function(error){
+            console.log(nom)
+        alert("La requête s'est terminée en échec. Infos : " + JSON.stringify(error));})
+    }
+
+
+
+    function onDelete(idt){
+    console.log(idt);
+    event.preventDefault();
+    let dataToSend = {
+        id: idt
+    };
+    let jsonData = JSON.stringify(dataToSend);
+    console.log(jsonData);
+        $.ajax({
+            url: "user.php",
+            method: "Delete",
+            data:jsonData
+        })
+        .done(function(response){
+        }) 
+        .fail(function(error){
+        alert("La requête s'est terminée en échec. Infos : " + JSON.stringify(error));})        
+    }
+</script>
+</body>
+</html>

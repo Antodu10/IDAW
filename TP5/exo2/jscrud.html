@@ -77,6 +77,7 @@
     
     <script>
     let table = new DataTable('.myTable');
+    
     function onFormSubmit() {
     // prevent the form to be sent to the server
     event.preventDefault();
@@ -95,9 +96,24 @@
 
 
     }}
-    function onDelete(){
-        event.preventDefault();
-        $("#errorNom").append('delete')
+    function onDelete(idt){
+    event.preventDefault();
+        let formData = $('#delete_text').val();
+        console.log(formData);
+        $.ajax({
+            url: "user.php",
+            method: "Delete",
+            dataType : "json",
+            data:{
+                id : formData}
+        })
+        .done(function(response){
+            console.log(response);
+            let data = JSON.stringify(response);
+            $(".reponse-delete").append(data);
+        }) 
+        .fail(function(error){
+        alert("La requête s'est terminée en échec. Infos : " + JSON.stringify(error));})        
     }
 </script>
 </body>

@@ -21,7 +21,7 @@
     switch($_SERVER["REQUEST_METHOD"]){
         case 'GET':
             $url_parts = parse_url($current_url);
-            $segments = explode('/', $url_parts['path'],'/');
+            $segments = explode('/', $url_parts['path']);
             $last_segment = end($segments);
             if(is_in($last_segment,$resultats)){
                 $request = $pdo->prepare("select * from users where id =:id");
@@ -34,20 +34,17 @@
             };
         case 'POST':
             $data_array = json_decode(file_get_contents('php://input'), true);
-            echo $data_array["name"];
             $request = $pdo->prepare("insert into users (name,email) values (:nom,:email)");
             $request->bindParam(":nom",$data_array["name"], PDO::PARAM_STR);
             $request->bindParam(":email", $data_array["email"], PDO::PARAM_STR);
             $request->execute();
-            //$request2 = $pdo->prepare("select id
-                                            //FROM users
-                                           // ORDER BY id DESC
-                                           // LIMIT 1");
-           // $request2->execute();
-           // $resultat=$request2->fetch(PDO::FETCH_OBJ);
-           $response = ["message" => "hello"];
-           echo json_encode($response);
-            exit();
+            $request = $pdo->prepare("select id
+                                            FROM users
+                                            ORDER BY id DESC
+                                            LIMIT 1");
+            $request->execute();
+            $resultat=$request->fetch(PDO::FETCH_OBJ);
+            exit(json_encode($resultat));
             
         case 'DELETE':
             $data_array = json_decode(file_get_contents('php://input'), true);
@@ -55,13 +52,7 @@
             $request = $pdo->prepare("delete from users where id = :id ");
             $request->bindParam(":id", $data_array['id'], PDO::PARAM_STR);
             $request->execute();
-            $request = $pdo->prepare("select id
-            FROM users
-            ORDER BY id DESC
-            LIMIT 1");
-            $request->execute();
-            $resultat=$request->fetch(PDO::FETCH_OBJ);
-            exit(json_encode($resultat));}
+            exit();}
             else{
                 exit(http_response_code(204));
             };
