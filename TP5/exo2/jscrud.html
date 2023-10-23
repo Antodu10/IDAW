@@ -4,6 +4,7 @@
     <meta charset='utf-8'>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+    <link href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
     <title>tabletest</title>
     <style>
         body{ margin-top: 5em; }
@@ -20,7 +21,7 @@
     </style>
 </head>
 <body>
-    <table class="table">
+    <table class="myTable">
     <thead>
         <tr>
             <th scope="col">Nom</th>
@@ -59,8 +60,9 @@
             <div class="col-sm-3">
                 <input type="text" class="form-control" id="inputRemarque" >
             </div>
+            <div class="delete">
 
-
+            </div>
         </div>
         
         <div class="form-group row">
@@ -70,7 +72,11 @@
             </div>
         </div>
     </form>
+</body>
+    <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    
     <script>
+    let table = new DataTable('.myTable');
     function onFormSubmit() {
     // prevent the form to be sent to the server
     event.preventDefault();
@@ -82,9 +88,17 @@
     if(nom==""){
         $("#errorNom").append('nom obligatoire');
     }else{
-    $("#studentsTableBody").append(`<tr><td>${nom}</td><td>${prenom}</td><td>${date}</td><td>${love}</td><td>${remarque}</td><td></td><td></td></tr>`);
+    $("#studentsTableBody").append(`<tr><td>${nom}</td><td>${prenom}</td><td>${date}</td><td>${love}</td><td>${remarque}</td>
+        <td><button onsubmite="onDelete();">Delete</button></td>
+        <td></td></tr>`);
     $("#errorNom").text('');
+
+
     }}
+    function onDelete(){
+        event.preventDefault();
+        $("#errorNom").append('delete')
+    }
 </script>
 </body>
 </html>
